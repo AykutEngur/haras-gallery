@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}About · Hara's Digital Gallery{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div class="container">
+    <h1>About Hara</h1>
+    <p class="lead">The artist behind the gallery.</p>
+  </div>
+</section>
+<section class="section">
+  <div class="container about">
+    <div class="about-photo">
+      {# Replace with her formal photo: save it as static/img/hara.jpg and change the filename below #}
+      <img src="{{ url_for('static', filename='img/portrait-placeholder.svg') }}" alt="Portrait of Hara Giannopoulos">
+    </div>
+    <div class="about-text">
+      <p class="eyebrow">Γεια σας! Hello!</p>
+      <h2>Hara Giannopoulos</h2>
+      <p>I'm a Greek-American person with a strong passion for art, and Greece is at the heart of everything I do. The blue of the sea, the white of the island houses, the warmth of family tables full of fruit: these are the colors and moments I keep coming back to on paper.</p>
+      <p>I graduated from Binghamton University with my bachelor's degree <strong>magna cum laude</strong>. During my time there I served as <strong>President of the Binghamton Hellenic Society</strong>, bringing students together to celebrate Greek culture, traditions and community.</p>
+      <p>Drawing has always been my way of slowing down and noticing things. This gallery is where I share that work, and where you can ask me to create something personal just for you.</p>
+      <ul class="facts">
+        <li><span>🎓</span> B.A., Binghamton University, <em>magna cum laude</em></li>
+        <li><span>🇬🇷</span> Former President, Binghamton Hellenic Society</li>
+      </ul>
+      <a href="{{ url_for('commission') }}" class="btn">Work with Hara</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

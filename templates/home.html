@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% from "_macros.html" import drawing_card %}
+{% block content %}
+<section class="hero">
+  <div class="container hero-inner">
+    <div class="hero-text">
+      <p class="eyebrow">Original drawings &middot; Personal commissions</p>
+      <h1>Art made by hand,<br><em>with a little Aegean light.</em></h1>
+      <p class="lead">Welcome to the gallery of Hara Giannopoulos, a Greek-American artist sharing her drawings and creating personalized pieces for you.</p>
+      <div class="hero-actions">
+        <a href="{{ url_for('gallery') }}" class="btn">Explore the Gallery</a>
+        <a href="{{ url_for('commission') }}" class="btn btn-outline">Request a Drawing</a>
+      </div>
+    </div>
+    {% if featured %}
+    <div class="hero-art">
+      <img src="{{ url_for('static', filename='uploads/' ~ featured[0].picture) }}" alt="{{ featured[0].name }}">
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <h2>Latest Drawings</h2>
+      <a href="{{ url_for('gallery') }}" class="link-arrow">View all &rarr;</a>
+    </div>
+    <div class="grid">
+      {% for d in featured %}{{ drawing_card(d) }}{% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section-blue">
+  <div class="container cta">
+    <div>
+      <h2>Want something made just for you?</h2>
+      <p>A portrait, a place you love, a gift for someone special. Tell Hara your idea and suggest a starting price. The final price is agreed together.</p>
+    </div>
+    <a href="{{ url_for('commission') }}" class="btn btn-white">Start a Commission</a>
+  </div>
+</section>
+{% endblock %}

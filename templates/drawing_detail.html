@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% from "_macros.html" import drawing_card %}
+{% block title %}{{ drawing.name }} · Hara's Digital Gallery{% endblock %}
+{% block content %}
+<section class="section">
+  <div class="container">
+    <a href="{{ url_for('gallery') }}" class="link-back">&larr; Back to gallery</a>
+    <div class="detail">
+      <div class="detail-img">
+        <img src="{{ url_for('static', filename='uploads/' ~ drawing.picture) }}" alt="{{ drawing.name }}" data-lightbox>
+        <p class="muted small">Click the image to enlarge</p>
+      </div>
+      <div class="detail-info">
+        <p class="eyebrow">Published {{ drawing.published_date.strftime('%B %d, %Y') }}</p>
+        <h1>{{ drawing.name }}</h1>
+        <div class="divider"></div>
+        <p class="description">{{ drawing.description }}</p>
+        <div class="detail-cta">
+          <p>Love this style? Hara can create a personalized piece for you.</p>
+          <a href="{{ url_for('commission') }}" class="btn">Request a Similar Drawing</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% if others %}
+<section class="section section-soft">
+  <div class="container">
+    <h2>More from the gallery</h2>
+    <div class="grid">
+      {% for d in others %}{{ drawing_card(d) }}{% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<div class="lightbox" hidden>
+  <button class="lightbox-close" aria-label="Close">&times;</button>
+  <img src="" alt="">
+</div>
+{% endblock %}

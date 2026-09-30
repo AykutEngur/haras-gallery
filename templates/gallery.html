@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% from "_macros.html" import drawing_card %}
+{% block title %}Gallery · Hara's Digital Gallery{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div class="container">
+    <h1>Gallery</h1>
+    <p class="lead">Click any drawing to see it up close and read its story.</p>
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    {% if drawings %}
+      <div class="grid">
+        {% for d in drawings %}{{ drawing_card(d) }}{% endfor %}
+      </div>
+    {% else %}
+      <p class="empty">No drawings yet. Check back soon!</p>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

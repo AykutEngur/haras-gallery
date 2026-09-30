@@ -1,0 +1,44 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Order #{{ order.id }} · Admin{% endblock %}
+{% block admin %}
+<a href="{{ url_for('admin_orders') }}" class="link-back">&larr; All orders</a>
+<div class="section-head">
+  <h1>Order #{{ order.id }}</h1>
+  <span class="badge badge-{{ order.status|replace(' ', '-') }}">{{ order.status }}</span>
+</div>
+
+<div class="order-grid">
+  <div class="card-form">
+    <h3>Customer</h3>
+    <dl class="dl">
+      <dt>Name</dt><dd>{{ order.first_name }} {{ order.last_name }}</dd>
+      <dt>Email</dt><dd><a href="mailto:{{ order.email }}">{{ order.email }}</a></dd>
+      <dt>Phone</dt><dd><a href="tel:{{ order.phone }}">{{ order.phone }}</a></dd>
+      <dt>Initial offer</dt><dd><strong>${{ '%.2f'|format(order.initial_price) }}</strong></dd>
+      <dt>Received</dt><dd>{{ order.created_at.strftime('%B %d, %Y · %H:%M') }} UTC</dd>
+    </dl>
+    <h3>Request</h3>
+    <p class="description">{{ order.description }}</p>
+  </div>
+
+  <div>
+    <form method="post" class="form card-form">
+      <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+      <h3>Manage</h3>
+      <label>Status
+        <select name="status">
+          {% for s in statuses %}<option value="{{ s }}" {{ 'selected' if s == order.status }}>{{ s|capitalize }}</option>{% endfor %}
+        </select>
+      </label>
+      <label>Private notes (agreed price, deadline, etc.)
+        <textarea name="admin_notes" rows="5">{{ order.admin_notes or '' }}</textarea>
+      </label>
+      <button class="btn btn-block">Save changes</button>
+    </form>
+    <form method="post" action="{{ url_for('admin_order_delete', order_id=order.id) }}" data-confirm="Delete this order permanently?" class="center">
+      <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+      <button class="link-btn danger">Delete order</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

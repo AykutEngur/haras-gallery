@@ -1,0 +1,12 @@
+{% macro drawing_card(d) %}
+<a class="card" href="{{ url_for('drawing_detail', drawing_id=d.id) }}">
+  <div class="card-img">
+    <img src="{{ url_for('static', filename='uploads/' ~ d.picture) }}" alt="{{ d.name }}" loading="lazy">
+    <span class="card-view">View drawing</span>
+  </div>
+  <div class="card-body">
+    <h3>{{ d.name }}</h3>
+    <p class="muted">{{ d.published_date.strftime('%B %d, %Y') }}</p>
+  </div>
+</a>
+{% endmacro %}

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Hara's Digital Gallery{% endblock %}</title>
+  <meta name="description" content="Original drawings by Hara Giannopoulos. Browse the gallery or request a personalized drawing.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  {% block head %}{% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+  <header class="site-header">
+    <div class="container nav">
+      <a href="{{ url_for('home') }}" class="brand">
+        <span class="brand-mark">Η</span>
+        <span>Hara's <em>Digital Gallery</em></span>
+      </a>
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav-links">
+        {% set ep = request.endpoint or '' %}
+        <a href="{{ url_for('home') }}" class="{{ 'active' if ep == 'home' }}">Home</a>
+        <a href="{{ url_for('gallery') }}" class="{{ 'active' if ep in ['gallery', 'drawing_detail'] }}">Gallery</a>
+        <a href="{{ url_for('about') }}" class="{{ 'active' if ep == 'about' }}">About</a>
+        <a href="{{ url_for('commission') }}" class="btn btn-small {{ 'active' if ep == 'commission' }}">Commission a Drawing</a>
+        {% if session.get('is_admin') %}<a href="{{ url_for('admin_dashboard') }}">Admin</a>{% endif %}
+      </nav>
+    </div>
+    <div class="meander" aria-hidden="true"></div>
+  </header>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="container flashes">
+        {% for cat, msg in messages %}
+          <div class="flash flash-{{ cat }}">{{ msg }}<button class="flash-close" aria-label="Dismiss">&times;</button></div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <main>{% block content %}{% endblock %}</main>
+
+  <footer class="site-footer">
+    <div class="meander meander-light" aria-hidden="true"></div>
+    <div class="container footer-inner">
+      <div>
+        <p class="footer-brand">Hara's Digital Gallery</p>
+        <p class="muted-light">Original drawings by Hara Giannopoulos</p>
+      </div>
+      <nav class="footer-links">
+        <a href="{{ url_for('gallery') }}">Gallery</a>
+        <a href="{{ url_for('about') }}">About</a>
+        <a href="{{ url_for('commission') }}">Commissions</a>
+        <a href="#" aria-label="Instagram (coming soon)">Instagram</a>
+      </nav>
+      <p class="muted-light small">&copy; {{ current_year }} Hara Giannopoulos. All artwork is the property of the artist.</p>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

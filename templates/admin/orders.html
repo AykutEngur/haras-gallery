@@ -1,0 +1,12 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Orders · Admin{% endblock %}
+{% block admin %}
+<h1>Orders</h1>
+<div class="filters">
+  <a href="{{ url_for('admin_orders') }}" class="chip {{ 'active' if not current }}">All</a>
+  {% for s in statuses %}
+    <a href="{{ url_for('admin_orders', status=s) }}" class="chip {{ 'active' if current == s }}">{{ s|capitalize }}</a>
+  {% endfor %}
+</div>
+{% include "admin/_orders_table.html" with context %}
+{% endblock %}

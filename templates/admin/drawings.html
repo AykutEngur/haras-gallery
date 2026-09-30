@@ -1,0 +1,33 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Drawings · Admin{% endblock %}
+{% block admin %}
+<div class="section-head">
+  <h1>Drawings</h1>
+  <a href="{{ url_for('admin_drawing_form') }}" class="btn btn-small">+ Add drawing</a>
+</div>
+{% if drawings %}
+<div class="table-wrap">
+  <table class="table">
+    <thead><tr><th></th><th>Name</th><th>Published</th><th></th></tr></thead>
+    <tbody>
+      {% for d in drawings %}
+      <tr>
+        <td><img class="thumb" src="{{ url_for('static', filename='uploads/' ~ d.picture) }}" alt=""></td>
+        <td><a href="{{ url_for('drawing_detail', drawing_id=d.id) }}" target="_blank">{{ d.name }}</a></td>
+        <td>{{ d.published_date.strftime('%b %d, %Y') }}</td>
+        <td class="actions">
+          <a href="{{ url_for('admin_drawing_form', drawing_id=d.id) }}">Edit</a>
+          <form method="post" action="{{ url_for('admin_drawing_delete', drawing_id=d.id) }}" data-confirm="Delete “{{ d.name }}”? This cannot be undone.">
+            <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+            <button class="link-btn danger">Delete</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<p class="empty">No drawings yet.</p>
+{% endif %}
+{% endblock %}

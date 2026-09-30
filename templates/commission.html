@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Commission a Drawing · Hara's Digital Gallery{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div class="container">
+    <h1>Commission a Drawing</h1>
+    <p class="lead">Tell Hara what you'd like and she'll get back to you personally.</p>
+  </div>
+</section>
+<section class="section">
+  <div class="container commission">
+    <aside class="steps">
+      <h3>How it works</h3>
+      <ol>
+        <li><strong>Share your idea.</strong> Describe the drawing you have in mind: subject, size, style, deadline.</li>
+        <li><strong>Suggest a price.</strong> Enter what you'd like to offer as a starting point.</li>
+        <li><strong>Talk it through.</strong> Hara contacts you to discuss details and agree on the final price.</li>
+        <li><strong>Receive your art.</strong> Your personalized drawing is created just for you.</li>
+      </ol>
+    </aside>
+
+    <form method="post" class="form card-form" novalidate>
+      <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+      <div class="row">
+        <label>First name
+          <input type="text" name="first_name" value="{{ form.first_name }}" required maxlength="80" autocomplete="given-name">
+        </label>
+        <label>Last name
+          <input type="text" name="last_name" value="{{ form.last_name }}" required maxlength="80" autocomplete="family-name">
+        </label>
+      </div>
+      <div class="row">
+        <label>Phone number
+          <input type="tel" name="phone" value="{{ form.phone }}" required maxlength="30" autocomplete="tel">
+        </label>
+        <label>Email
+          <input type="email" name="email" value="{{ form.email }}" required maxlength="150" autocomplete="email">
+        </label>
+      </div>
+      <label>Describe your drawing
+        <textarea name="description" rows="6" required maxlength="3000" placeholder="e.g. A pastel drawing of my grandmother's house in Crete, A4 size, needed by December...">{{ form.description }}</textarea>
+      </label>
+      <label>Your initial price offer (USD)
+        <div class="price-input">
+          <span>$</span>
+          <input type="number" name="initial_price" value="{{ form.initial_price }}" min="1" step="0.01" required>
+        </div>
+      </label>
+      <p class="note">ℹ️ This is an <strong>initial offer only</strong>, not the final price. The final price is negotiable and will be agreed with Hara after discussing your request.</p>
+      <button type="submit" class="btn btn-block">Send Request</button>
+    </form>
+  </div>
+</section>
+{% endblock %}
