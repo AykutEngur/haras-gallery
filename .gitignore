@@ -2,8 +2,4 @@
 __pycache__/
 *.db
 .env
-
-export SECRET_KEY="2e87de989e7fcc6891ed91614ed9fbf7184154261ea539f37922a25d9ff21287"
-export ADMIN_USERNAME="hara"
-export ADMIN_PASSWORD="hara123"
-python3 app.py
+.DS_Store
